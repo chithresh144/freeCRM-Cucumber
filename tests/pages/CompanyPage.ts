@@ -198,7 +198,7 @@ export class CompanyPage {
      console.log("Clicked on companies")
         const row = this.page.locator('table tbody tr')
             .filter({ has: this.page.locator(`td a:text-is("${context.companyName}")`) })
-        await row.isVisible()
+        await row.waitFor({state: 'visible', timeout: 60000})
         await row.locator('button:has(.trash.icon)').click()
         await this.page.locator(".ui.red.button").click()
         console.log(context.companyName, "has been successgully deleted")
