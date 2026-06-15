@@ -221,5 +221,5 @@ async deleteCompany(context?: any) {
 
     console.log(context.companyName, "has been successfully deleted");
 }
-    }
+    
 }
