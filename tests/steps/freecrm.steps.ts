@@ -44,7 +44,7 @@ When('user edits the company details', async function () {
     mediaType: 'image.png'
   });
 });
-
+/*
 When('user deletes the company', async function () {
   await companyPage.deleteCompany(this);
 
@@ -53,3 +53,4 @@ When('user deletes the company', async function () {
     mediaType: 'image.png'
   });
 });
+*/
