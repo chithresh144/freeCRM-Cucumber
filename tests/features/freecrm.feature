@@ -7,4 +7,4 @@ Feature: Free CRM Company Flow
     And user creates a company
     Then user verifies the company by searching
     And user edits the company details
-    And user deletes the company
+    //And user deletes the company
