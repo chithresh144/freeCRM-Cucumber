@@ -191,16 +191,35 @@ export class CompanyPage {
         console.log("Updated the values of ",context.companyName)
     }
 
-    async deleteCompany(context?: any) {
-        await this.page.getByRole('link', { name: ' Companies' }).hover()
-     console.log("Hovered on the side drawer having companies")
-     await this.page.getByRole('link', { name: ' Companies' }).click()
-     console.log("Clicked on companies")
-        const row = this.page.locator('table tbody tr')
-            .filter({ has: this.page.locator(`td a:text-is("${context.companyName}")`) })
-        await row.waitFor({state: 'visible', timeout: 100000})
-        await row.locator('button:has(.trash.icon)').click()
-        await this.page.locator(".ui.red.button").click()
-        console.log(context.companyName, "has been successgully deleted")
+async deleteCompany(context?: any) {
+
+    await this.page.getByRole('link', { name: ' Companies' }).hover();
+    console.log("Hovered on companies");
+
+    await this.page.getByRole('link', { name: ' Companies' }).click();
+    console.log("Clicked on companies");
+
+    // ✅ Wait for table
+    await this.page.locator('table tbody').waitFor({ state: 'visible', timeout: 60000 });
+
+    // ✅ Robust row locator
+    const row = this.page.locator('table tbody tr', {
+        hasText: context.companyName
+    });
+
+    await row.first().waitFor({ state: 'visible', timeout: 60000 });
+
+    await row.first().scrollIntoViewIfNeeded();
+
+    const deleteBtn = row.first().locator('button:has(.trash.icon)');
+    await deleteBtn.waitFor({ state: 'visible', timeout: 60000 });
+    await deleteBtn.click();
+
+    const confirmBtn = this.page.locator(".ui.red.button");
+    await confirmBtn.waitFor({ state: 'visible' });
+    await confirmBtn.click();
+
+    console.log(context.companyName, "has been successfully deleted");
+}
     }
 }
